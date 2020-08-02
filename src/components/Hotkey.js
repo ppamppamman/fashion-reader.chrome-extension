@@ -1,22 +1,30 @@
 //rfce
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function Hotkey() {
+  let keysPressed = {};
+
   const init = () => {
-    document.addEventListener("keydown", (e) => {
-      switch (e.key){
-        case "y":
-          alert("y keydown")
-        break;
+    // keydown
+    document.addEventListener('keydown', (event) => {
+      keysPressed[event.key] = true;
+      if (keysPressed['Control'] && event.key == '=') {
+          console.log("재생");
+          let target = document.querySelector("input.txt").value;
+          speechSynthesis.speak(new SpeechSynthesisUtterance(target));
       }
-        
+    });
+    
+    // keyup
+    document.addEventListener('keyup', (event) => {
+        keysPressed[event.key] = false;
     });
   }
-  
-  // const onInputCommand = () => {
 
-  // }
-  init();
+  useEffect(() => {
+    init();
+  });
+  
   return (null);
 }
 
