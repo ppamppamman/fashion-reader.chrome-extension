@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+// 데이터 파싱
 function Parse() {;
 
   // init

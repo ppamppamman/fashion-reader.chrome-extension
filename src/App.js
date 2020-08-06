@@ -1,9 +1,8 @@
 import React from 'react';
 import styled, {createGlobalStyle} from 'styled-components';
 
-import Speech from './components/Speech';
-import Hotkey from './components/Hotkey';
-import Parse from './components/Parse';
+import HotkeySpeech from './components/HotkeySpeech';
+import ParseMusinsa from './components/ParseMusinsa';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -23,9 +22,8 @@ function App() {
     <>
       <GlobalStyle />
       <AppStyleBlock>
-        <Speech />
-        <Hotkey />
-        <Parse />
+        <HotkeySpeech />
+        <ParseMusinsa />
       </AppStyleBlock>
     </>
   )
