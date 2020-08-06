@@ -6,7 +6,13 @@ function Hotkey() {
 
   const init = () => {
     // keydown
-    document.addEventListener('keydown', (event) => {
+    window.chrome.runtime.onMessage.addListener(
+      (message, sender, sendResponse) => {
+      console.log(message, ":", sender,  ":", sendResponse);
+      speechSynthesis.speak(new SpeechSynthesisUtterance("e"));
+    });
+
+    window.addEventListener('keydown', (event) => {
       keysPressed[event.key] = true;
       if (keysPressed['Control'] && event.key == '=') {
           console.log("재생");
@@ -16,7 +22,7 @@ function Hotkey() {
     });
     
     // keyup
-    document.addEventListener('keyup', (event) => {
+    window.addEventListener('keyup', (event) => {
         keysPressed[event.key] = false;
     });
   }
