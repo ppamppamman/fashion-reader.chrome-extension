@@ -15,9 +15,10 @@
     "scripts": ["background.js"],
     "persistent": true
   },
-  "contnet_scripts": [
+  "content_scripts": [
     {
-      "js":["/static/js/main.js"]
+      "matches": ["https://store.musinsa.com/*"],
+      "js":["/static/js/runtime-main.js","/static/js/2.chunk.js", "/static/js/main.chunk.js"]
     }
   ],
   "commands": {

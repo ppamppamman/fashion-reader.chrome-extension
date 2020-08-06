@@ -3,6 +3,7 @@ import styled, {createGlobalStyle} from 'styled-components';
 
 import Speech from './components/Speech';
 import Hotkey from './components/Hotkey';
+import Parse from './components/Parse';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -12,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const AppStyleBlock = styled.div`
+  display: none; /* 숨긴다. */
   background-color: #dddddd;
   width:400px;
 `
@@ -23,6 +25,7 @@ function App() {
       <AppStyleBlock>
         <Speech />
         <Hotkey />
+        <Parse />
       </AppStyleBlock>
     </>
   )

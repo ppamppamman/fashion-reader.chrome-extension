@@ -12,17 +12,18 @@ function Hotkey() {
       speechSynthesis.speak(new SpeechSynthesisUtterance("e"));
     });
 
-    window.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', (event) => {
       keysPressed[event.key] = true;
       if (keysPressed['Control'] && event.key == '=') {
           console.log("재생");
-          let target = document.querySelector("input.txt").value;
+          //let target = document.querySelector("input.txt").value;
+          let target = JSON.parse(window.localStorage.getItem('watchListDesc')).slice(-1)[0];
           speechSynthesis.speak(new SpeechSynthesisUtterance(target));
       }
     });
     
     // keyup
-    window.addEventListener('keyup', (event) => {
+    document.addEventListener('keyup', (event) => {
         keysPressed[event.key] = false;
     });
   }
