@@ -39,9 +39,9 @@
     },
     "_execute_page_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+E",
-        "windows": "Alt+Shift+P",
-        "mac": "Alt+Shift+P"
+        "default": "Alt+O",
+        "windows": "Alt+O",
+        "mac": "Alt+O"
       }
     },
     "command-speech-hotkey": {
@@ -59,5 +59,5 @@
   "permissions": [ 
     "commands", "contextMenus", "management", "tabs", "storage", "https://github.com/*" 
   ],
-  "content_security_policy": "default-src 'self'; script-src 'self' 'sha256-Pny2tYxF45eTUlXaFLk1aHK30+YgYKhvbKZcChOcq+M=' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+  "content_security_policy": "default-src 'self'; script-src 'self' 'sha256-Pny2tYxF45eTUlXaFLk1aHK30+YgYKhvbKZcChOcq+M=' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' https://image.msscdn.net data:;"
 }
