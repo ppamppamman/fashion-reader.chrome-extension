@@ -37,13 +37,6 @@ function CartItemList({cart}) {
 }
 
 function Cart({cart, onCreate, onDelete}) {
-  // const [itemInfo, setItemInfo] = useState([]);
-  // const onChange = e => setItemInfo(e.target.value);
-  // const onCreate = 
-  // const onDelete = 
-
-  // console.log("ccc", cart) // undefined
-  
   console.log("cart : ", cart);
   return (
     <div className="cart">
