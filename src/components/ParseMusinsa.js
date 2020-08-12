@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addItem, changeCurrentId } from '../modules/cart';
 
 // 데이터 파싱
-function Parse() {;
+function Parse() {
 
   // init
   const init = (target) => {
@@ -34,7 +34,7 @@ function Parse() {;
 
     if ( checkWatchListUrl(window.location.href) ) {
       console.log("이미 본 제품");
-      //speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 제품"));
+      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 제품"));
     } else {
       console.log("저장 시작");
 
@@ -56,7 +56,6 @@ function Parse() {;
       window.localStorage.setItem("watchListImg", JSON.stringify(watchListImg));
       window.localStorage.setItem("watchListDesc", JSON.stringify(watchListDesc));
 
-      //speechSynthesis.speak(new SpeechSynthesisUtterance(document.getElementById('bigimg').alt));
     }
 
   });

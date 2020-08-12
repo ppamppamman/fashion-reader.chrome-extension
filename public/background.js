@@ -1,9 +1,10 @@
+/*global chrome*/ // eslint처리
+
 // 커맨드 예제
 chrome.commands.onCommand.addListener(function(command) {
   console.log('Command:', command);
   speechSynthesis.speak(new SpeechSynthesisUtterance("백그라운드"));
-  // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  //});
+  // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {});
 
 });
 
@@ -31,7 +32,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
       return true;
     case "INIT_CART":
       chrome.storage.local.set({cart:{currentId:0,items:[]} }, () => {
-        sendResponse({data: "init 되었다 이말이야"});
+        sendResponse({data: "카트 INIT 되었다 이말이야"});
       });
       return true;
     case "GET_CURRENT_ITEM":
@@ -64,8 +65,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
       });
       return true;
     default:
-      console.log("default message");
+      console.log("background default message. 아마도 오류일것이니 개발자에게 문의하세요");
       return true;
   }
-  
 });
