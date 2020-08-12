@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Cart from '../components/Cart';
-
 /* 08/13 
-  // The cart status which is that have to manage at react application
-  So that, We are going to stop to use redux.
-  익스텐션에서 자체적으로 상태를 다루는게 훨씬 이득
-  이에 따라 1차에서 리덕스 사용을 중지한다.
+  익스텐션에서 자체적으로 상태를 다루는게 훨씬 이득.
+  왜냐하면, 리덕스 상태를 초기화 하는 과정에서 크롬 스토리지의 async한 환경을
+  리액트가 기다리게 해야 하는데 아직 이를 처리하기가 어렵기 때문.
+  이에 따라 1차에서 리덕스 사용을 중지.
 */
+
+import React, { useState, useEffect } from 'react';
+//import { useSelector, useDispatch } from 'react-redux';
 // import { addItem, deleteItem, changeCurrentId, syncWithStorage } from '../modules/cart';
-// var [cart, setCart] = useState(0); // 오류로 인한 제거
+import Cart from '../components/Cart';
 
 function initStorageData() {
   window.chrome.runtime.sendMessage({method: "INIT_CART"}, (response) => {
@@ -23,10 +22,7 @@ function getStorageData(cart, setCart){
     console.log("메세지 cart: ", response.cart);
     
     setCart(response.cart);
-    
     return response.cart;
-    // const dispatch = useDispatch();
-    // dispatch(syncWithStorage(cart)); //동기화 필요
   });
 }
 
@@ -38,7 +34,6 @@ function CartContainer() {
   var [cart, setCart] = useState(initialState);
   
   useEffect(() => {
-    //await setCart(getStorageData(cart));
     console.log("cart 값은 : ", cart);
   }, [cart]);
 
@@ -46,13 +41,6 @@ function CartContainer() {
     setCart(getStorageData(cart, setCart));
     console.log("cart update ? ", cart);
   }
-  // console.log("state : ", useSelector(state => state));
-  // cart = useSelector( state => state.cart );
-  // cart = getStorageData(cart, setCart);
-  
-  // const onCreate = useCallback((item) => { dispatch(addItem(item)) }, [dispatch]);
-  // const onDelete = useCallback((id) => { dispatch(deleteItem(id)) }, [dispatch]);
-  // const onChange = useCallback((targetId) => {dispatch(changeCurrentId(targetId))}, [dispatch]);
   console.log("CartContainer cart :", cart);
   return (
     <>
@@ -60,12 +48,7 @@ function CartContainer() {
       <button onClick={ () => getStorageData(cart, setCart) }>체크</button>
       <button onClick={ initStorageData }>init</button>
       <br />
-      <Cart 
-        cart={cart}
-        // onCreate={onCreate}
-        // onDelete={onDelete}
-        // onChange={onChange}
-      />
+      <Cart cart={cart} />
     </>
   )
 }
