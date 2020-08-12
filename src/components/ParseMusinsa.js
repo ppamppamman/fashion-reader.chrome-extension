@@ -1,22 +1,22 @@
 import React, { useEffect, useCallback } from 'react'
-import { useDispatch } from 'react-redux';
-import { addItem, changeCurrentId } from '../modules/cart';
+// import { useDispatch } from 'react-redux';
+// import { addItem, changeCurrentId } from '../modules/cart';
 
 // 데이터 파싱
 function Parse() {
 
   // init
-  const init = (target) => {
-    return JSON.parse(window.localStorage.getItem(target)) ? 
-      JSON.parse(window.localStorage.getItem(target)) : 
-      [];
-  }
+  // const init = (target) => {
+  //   return JSON.parse(window.localStorage.getItem(target)) ? 
+  //     JSON.parse(window.localStorage.getItem(target)) : 
+  //     [];
+  // }
   // chrome.storage init
-  let watchListUrl, watchListImg, watchListDesc;
-  [watchListUrl, watchListImg, watchListDesc] = [init("watchListUrl"), init("watchListImg"), init("watchListDesc")];
+  // let watchListUrl, watchListImg, watchListDesc;
+  // [watchListUrl, watchListImg, watchListDesc] = [init("watchListUrl"), init("watchListImg"), init("watchListDesc")];
   
-  const dispatch = useDispatch();
-  const onChange = useCallback((targetId) => {dispatch(changeCurrentId(targetId))}, [dispatch]);
+  // const dispatch = useDispatch();
+  // const onChange = useCallback((targetId) => {dispatch(changeCurrentId(targetId))}, [dispatch]);
 
   const checkValidUrl = (link) => {
     let targetUrl = "store.musinsa.com/app/product/detail/";
@@ -46,7 +46,7 @@ function Parse() {
       window.chrome.runtime.sendMessage({method: "POST_ITEM_INFO", value: target}, function(response) {
         console.log(response.data);
       });
-      dispatch(addItem(target));
+      // dispatch(addItem(target));
 
       watchListUrl.push(window.location.href);
       watchListImg.push(document.getElementById('bigimg').src);

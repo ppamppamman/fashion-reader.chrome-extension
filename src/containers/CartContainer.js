@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Cart from '../components/Cart';
-import { addItem, deleteItem, changeCurrentId, syncWithStorage } from '../modules/cart';
 
-//var [cart, setCart] = useState(0); // 오류남
+/* 08/13 
+  // The cart status which is that have to manage at react application
+  So that, We are going to stop to use redux.
+  익스텐션에서 자체적으로 상태를 다루는게 훨씬 이득
+  이에 따라 1차에서 리덕스 사용을 중지한다.
+*/
+// import { addItem, deleteItem, changeCurrentId, syncWithStorage } from '../modules/cart';
+// var [cart, setCart] = useState(0); // 오류로 인한 제거
 
 function initStorageData() {
   window.chrome.runtime.sendMessage({method: "INIT_CART"}, (response) => {
