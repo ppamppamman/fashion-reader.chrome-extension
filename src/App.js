@@ -16,7 +16,6 @@ const HideAppStyleBlock = styled.div`
   width:400px; */
 `
 const AppStyleBlock = styled.div`
-    background-color: #dddddd;
     width:400px;
 `
 

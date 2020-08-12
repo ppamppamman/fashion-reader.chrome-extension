@@ -50,9 +50,10 @@ function CartContainer() {
   console.log("CartContainer cart :", cart);
   return (
     <>
-      <h1>카드 컨테이너입니다</h1>
+      <h1>FASHION-READER CART</h1>
       <button onClick={ () => getStorageData(cart, setCart) }>체크</button>
       <button onClick={ initStorageData }>init</button>
+      <br />
       <Cart 
         cart={cart}
         // onCreate={onCreate}
