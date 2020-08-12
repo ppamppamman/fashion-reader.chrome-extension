@@ -55,7 +55,6 @@ function Parse() {
       window.localStorage.setItem("watchListUrl", JSON.stringify(watchListUrl));
       window.localStorage.setItem("watchListImg", JSON.stringify(watchListImg));
       window.localStorage.setItem("watchListDesc", JSON.stringify(watchListDesc));
-
     }
 
   });
