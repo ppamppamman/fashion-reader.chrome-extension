@@ -6,18 +6,13 @@ import React, { useEffect, useCallback } from 'react'
 function Parse() {
 
   // init
-  // const init = (target) => {
-  //   return JSON.parse(window.localStorage.getItem(target)) ? 
-  //     JSON.parse(window.localStorage.getItem(target)) : 
-  //     [];
-  // }
-  // chrome.storage init
-  // let watchListUrl, watchListImg, watchListDesc;
-  // [watchListUrl, watchListImg, watchListDesc] = [init("watchListUrl"), init("watchListImg"), init("watchListDesc")];
+  const init = (target) => {
+    return JSON.parse(window.localStorage.getItem(target)) ? 
+      JSON.parse(window.localStorage.getItem(target)) : 
+      [];
+  }
+  let watchListUrl = init("watchListUrl"); // 리팩토링 필요 -> 로컬스토리지가 아닌 크롬스토리지에서 받아서 처리하도록
   
-  // const dispatch = useDispatch();
-  // const onChange = useCallback((targetId) => {dispatch(changeCurrentId(targetId))}, [dispatch]);
-
   const checkValidUrl = (link) => {
     let targetUrl = "store.musinsa.com/app/product/detail/";
     return link.includes(targetUrl);
@@ -34,7 +29,7 @@ function Parse() {
 
     if ( checkWatchListUrl(window.location.href) ) {
       console.log("이미 본 제품");
-      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 제품"));
+      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 제품입니다."));
     } else {
       console.log("저장 시작");
 
@@ -46,20 +41,14 @@ function Parse() {
       window.chrome.runtime.sendMessage({method: "POST_ITEM_INFO", value: target}, function(response) {
         console.log(response.data);
       });
-      // dispatch(addItem(target));
 
+      // checkWatchListUrl을 위한 레거시
       watchListUrl.push(window.location.href);
-      watchListImg.push(document.getElementById('bigimg').src);
-      watchListDesc.push(document.getElementById('bigimg').alt);
-
       window.localStorage.setItem("watchListUrl", JSON.stringify(watchListUrl));
-      window.localStorage.setItem("watchListImg", JSON.stringify(watchListImg));
-      window.localStorage.setItem("watchListDesc", JSON.stringify(watchListDesc));
     }
-
   });
 
-  return (null)
+  return (null);
 }
 
-export default Parse
+export default Parse;
