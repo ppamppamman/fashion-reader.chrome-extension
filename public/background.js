@@ -23,7 +23,10 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
         await chrome.storage.local.set({cart: 
           {
             currentId: TARGET_ID,
-            items: result.cart.items.concat({id: TARGET_ID, itemInfo: request.value})
+            items: result.cart.items.concat({
+              id: TARGET_ID, 
+              itemInfo: request.value
+            })
           }
         });
         await sendResponse({data: "POST 넘어갔다 이말이야", cart:result.cart});

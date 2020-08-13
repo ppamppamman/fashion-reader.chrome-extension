@@ -38,6 +38,7 @@ function CartItem({ each, onToggle }) {
           <div className="cartItem-text">
             <h1> id: {each.id} </h1>
             <h1> {each.itemInfo.watchListDesc} </h1>
+            <p> {JSON.stringify(each.itemInfo)} </p>
             <br />
           </div>
           <div className="cartItem-img" style={{ "text-align": "center" }}>
