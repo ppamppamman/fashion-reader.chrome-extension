@@ -8,18 +8,22 @@ chrome.commands.onCommand.addListener(function(command) {
 
 });
 
-let CURRENT_ID = 0;
 // onMessage
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   switch(request.method){
     case "POST_ITEM_INFO":
       console.log("request.value", request.value);
       chrome.storage.local.get(["cart"], async (result) => {
+        console.log("console.log(result.cart?.items.length);", result.cart?.items.length);
+        let TARGET_ID = result.cart?.items.length === 0 ? 0 : result.cart?.items[result.cart.items.length-1].id+1;
+        let CURRENT_ID = result.cart?.currentId === undefined ? 0 : result.cart?.currentId+1; 
         console.log(result.cart)
+        console.log("TARGET_ID는 ", TARGET_ID);
+        console.log("result.cart?.currentId : ", result.cart?.currentId);
         await chrome.storage.local.set({cart: 
           {
-            currentId: result.cart?.currnentId == undefined ? 0 : result.cart?.currnentId+1,
-            items: result.cart.items.concat({id: CURRENT_ID, itemInfo: request.value})
+            currentId: TARGET_ID,
+            items: result.cart.items.concat({id: TARGET_ID, itemInfo: request.value})
           }
         });
         await sendResponse({data: "POST 넘어갔다 이말이야", cart:result.cart});
@@ -31,13 +35,18 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
       });
       return true;
     case "INIT_CART":
-      chrome.storage.local.set({cart:{currentId:0,items:[]} }, () => {
+      chrome.storage.local.set({cart:{currentId:undefined, items:[]} }, () => {
         sendResponse({data: "카트 INIT 되었다 이말이야"});
       });
       return true;
     case "GET_CURRENT_ITEM":
       chrome.storage.local.get(["cart"], (result) => {
         sendResponse({data: "GET 마지막 요소됐다 이말이야", item: result.cart.items[result.cart.currentId]})
+      });
+      return true;
+    case "GET_SPECIFIC_ITEM":
+      chrome.storage.local.get(["cart"], (result) => {
+        sendResponse({data: "GET 다시듣기 버튼 클릭됐다 이말이야", item: result.cart.items[result.cart.currentId]})
       });
       return true;
     case "PATCH_CURRENT_ID_LEFT":

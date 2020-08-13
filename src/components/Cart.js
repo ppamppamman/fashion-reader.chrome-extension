@@ -1,12 +1,28 @@
 import React, { useState } from 'react'
 
 function CartItem({ each, onToggle }) {
+
+  let target, utterance;
+  let synth = speechSynthesis;
+
+  const onClickRepeat = (e) => {
+    console.log(e.targetId);
+    window.chrome.runtime.sendMessage({method: "GET_SPECIFIC_ITEM"}, async (response) => {
+      await console.log("메세지 확인", response)
+      await console.log("메세지 확인 itemInfo : ", response.item.itemInfo)
+      target = response.item.itemInfo.watchListDesc;
+      utterance = new SpeechSynthesisUtterance(target);
+      await synth.speak(utterance);
+    });
+  }
+
   return (
     <>
       <div className="divider" style={{"width": "90%", "height": "0", "margin": "2%", "overflow": "hidden", "border-top": "1px solid #e1e6ea" }}></div>
       <div className="cartItem" style={{"width":"85%", "margin":"2%", "padding":"2%"}}>
           <div className="cartItem-text">
-            <h1> {each.id, ' : ', each.itemInfo.watchListDesc} </h1>
+            <h1> id: {each.id} </h1>
+            <h1> {each.itemInfo.watchListDesc} </h1>
             <br />
           </div>
           <div className="cartItem-img" style={{ "text-align": "center" }}>

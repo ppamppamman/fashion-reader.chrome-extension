@@ -12,6 +12,7 @@ import Cart from '../components/Cart';
 
 function initStorageData() {
   window.chrome.runtime.sendMessage({method: "INIT_CART"}, (response) => {
+    window.localStorage.setItem("watchListUrl", JSON.stringify([]));
     console.log("메세지 결과: ", response.data);
   });
 }

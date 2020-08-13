@@ -31,17 +31,15 @@
     },
     "_execute_browser_action": {
       "suggested_key": {
-        "windows": "Ctrl+Shift+Y",
-        "mac": "Command+Shift+Y",
-        "chromeos": "Ctrl+Shift+U",
-        "linux": "Ctrl+Shift+J"
+        "windows": "Ctrl+Shift+0",
+        "mac": "Command+Shift+0"
       }
     },
     "_execute_page_action": {
       "suggested_key": {
-        "default": "Alt+O",
-        "windows": "Alt+O",
-        "mac": "Alt+O"
+        "default": "Ctrl+Shift+9",
+        "windows": "Ctrl+Shift+9",
+        "mac": "Command+Shift+9"
       }
     },
     "command-speech-hotkey": {
