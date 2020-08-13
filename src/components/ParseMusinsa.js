@@ -28,11 +28,10 @@ function Parse() {
     }
 
     if ( checkWatchListUrl(window.location.href) ) {
-      console.log("이미 본 제품");
-      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 제품입니다."));
+      console.log("이미 본 상품");
+      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 상품입니다."));
     } else {
       console.log("저장 시작");
-
       let target = {
         watchListUrl: window.location.href,
         watchListImg: document.getElementById('bigimg').src,
@@ -40,6 +39,7 @@ function Parse() {
       }
       window.chrome.runtime.sendMessage({method: "POST_ITEM_INFO", value: target}, function(response) {
         console.log(response.data);
+        speechSynthesis.speak(new SpeechSynthesisUtterance("준비 완료."));
       });
 
       // checkWatchListUrl을 위한 레거시

@@ -14,12 +14,12 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     case "POST_ITEM_INFO":
       console.log("request.value", request.value);
       chrome.storage.local.get(["cart"], async (result) => {
-        console.log("console.log(result.cart?.items.length);", result.cart?.items.length);
+        
         let TARGET_ID = result.cart?.items.length === 0 ? 0 : result.cart?.items[result.cart.items.length-1].id+1;
         let CURRENT_ID = result.cart?.currentId === undefined ? 0 : result.cart?.currentId+1; 
         console.log(result.cart)
         console.log("TARGET_ID는 ", TARGET_ID);
-        console.log("result.cart?.currentId : ", result.cart?.currentId);
+        
         await chrome.storage.local.set({cart: 
           {
             currentId: TARGET_ID,
