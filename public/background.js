@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
       return true;
     case "GET_SPECIFIC_ITEM":
       chrome.storage.local.get(["cart"], (result) => {
-        sendResponse({data: "GET 다시듣기 버튼 클릭됐다 이말이야", item: result.cart.items[result.cart.currentId]})
+        sendResponse({data: "GET 다시듣기 버튼 클릭됐다 이말이야", item: result.cart.items[request.targetId]})
       });
       return true;
     case "PATCH_CURRENT_ID_LEFT":
