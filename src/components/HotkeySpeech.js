@@ -31,8 +31,7 @@ function Hotkey() {
       let target;
       if (keysPressed['Shift']) {
         console.log(event.key, keysPressed[event.key]);
-        switch (event.key) {
-          case '!': // 재생
+        if (event.key == 'X' || event.key == 'ㅌ'){
             console.log("확인");
             event.preventDefault();
             synth.cancel(utterance);
@@ -52,8 +51,7 @@ function Hotkey() {
               // utterance = new SpeechSynthesisUtterance(target);
               // await synth.speak(utterance);
             });
-            break;
-          case '@': // 상세 재생
+        } else if (event.key == 'C' || event.key == 'ㅊ'){
             console.log("추가 정보 재생");
             event.preventDefault();
             synth.cancel(utterance);
@@ -65,46 +63,18 @@ function Hotkey() {
               utterance.voice = synth.getVoices()[voiceIdx];
               await synth.speak(utterance);
             });
-            break;
-          case '#': // 취소
-            console.log("취소");
+        }
+        else if (event.key == 'V' || event.key == 'ㅍ'){
+          console.log("취소");
             event.preventDefault();
             synth.cancel(utterance);
             target = "재생 취소."
             utterance = new SpeechSynthesisUtterance(target);
             utterance.voice = synth.getVoices()[voiceIdx];
             synth.speak(utterance);
-            break;
-          case ')':
-            console.log("타겟일 때 작동하는 기존 버전 내용")
-            event.preventDefault();
-            break;
-          case "ArrowLeft": // 로컬 스토리지 선택 포인트 좌측 이동
-            console.log("이전 상품");
-            window.chrome.runtime.sendMessage({method: "PATCH_CURRENT_ID_LEFT"}, async (response) => {
-              await console.log("메세지 확인", response)
-              event.preventDefault();
-              synth.cancel(utterance);
-              target = `현재 상품은 ${response.itemCount}개 중 ${response.currentId+1}개 째 상품입니다.`
-              utterance = new SpeechSynthesisUtterance(target);
-              utterance.voice = synth.getVoices()[voiceIdx];
-              await synth.speak(utterance);
-            });
-            break;
-          case "ArrowRight": // 로컬 스토리지 선택 포인트 우측 이동
-            console.log("다음 상품");
-            window.chrome.runtime.sendMessage({method: "PATCH_CURRENT_ID_RIGHT"}, async (response) => {
-              await console.log("메세지 확인", response);
-              event.preventDefault();
-              synth.cancel(utterance);
-              target = `현재 상품은 ${response.itemCount}개 중 ${response.currentId+1}개 째 상품입니다.`
-              utterance = new SpeechSynthesisUtterance(target);
-              utterance.voice = synth.getVoices()[voiceIdx];
-              await synth.speak(utterance);
-            });
-            break;
-          case 'H': // 커맨드 읽어주기 영어일 때
-            console.log("단축키 목록");
+        }
+        else if (event.key == 'B' || event.key == 'ㅠ'){
+          console.log("단축키 목록");
             event.preventDefault();
             synth.cancel(utterance);
             target = `
@@ -119,30 +89,30 @@ function Hotkey() {
               utterance.voice = synth.getVoices()[voiceIdx];
               synth.speak(utterance);
             }
-            // utterance = new SpeechSynthesisUtterance(target);
-            // speechSynthesis.speak(utterance);
-            break;
-          case 'ㅗ': // 커맨드 읽어주기 한글일 때
-            console.log("단축키 목록");
-            event.preventDefault();
-            synth.cancel(utterance);
-            target = `
-              쉬프트키와 숫자 1은 기본 재생. 쉬프트키와 숫자 2는 추가정보 재생. 쉬프트키와 숫자 3은 멈춤. 
-              쉬프트키와 왼쪽키는 이전 상품을 선택. 쉬프트키와 오른쪽키는 다음 상품을 선택. 
-              쉬프트와 H는 단축키 읽어주기입니다.`;
-            // 타겟 분할
-            let limit3 = Math.ceil(target.length/100);
-            for(let i =0; i<limit3; i++){
-              let tempTarget = target.substring(i*100, i*100+100);
-              utterance = new SpeechSynthesisUtterance(tempTarget);
+        }
+        else if (event.key == 'Q' || event.key == 'ㅃ'){
+          console.log("이전 상품");
+            window.chrome.runtime.sendMessage({method: "PATCH_CURRENT_ID_LEFT"}, async (response) => {
+              await console.log("메세지 확인", response)
+              event.preventDefault();
+              synth.cancel(utterance);
+              target = `현재 상품은 ${response.itemCount}개 중 ${response.currentId+1}개 째 상품입니다.`
+              utterance = new SpeechSynthesisUtterance(target);
               utterance.voice = synth.getVoices()[voiceIdx];
-              synth.speak(utterance);
-            }
-            // utterance = new SpeechSynthesisUtterance(target);
-            // speechSynthesis.speak(utterance);
-            break;
-          default:
-            break;
+              await synth.speak(utterance);
+            });
+        }
+        else if (event.key == 'W' || event.key == 'ㅉ'){
+          console.log("다음 상품");
+            window.chrome.runtime.sendMessage({method: "PATCH_CURRENT_ID_RIGHT"}, async (response) => {
+              await console.log("메세지 확인", response);
+              event.preventDefault();
+              synth.cancel(utterance);
+              target = `현재 상품은 ${response.itemCount}개 중 ${response.currentId+1}개 째 상품입니다.`
+              utterance = new SpeechSynthesisUtterance(target);
+              utterance.voice = synth.getVoices()[voiceIdx];
+              await synth.speak(utterance);
+            });
         }
       }
     
