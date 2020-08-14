@@ -5,6 +5,16 @@ function CartItem({ each, onToggle }) {
   let target, utterance;
   let desc = [];
   let synth = speechSynthesis;
+  let voiceIdx;
+  
+  console.log("카트아이템")
+  for(let [idx, synthVoice] of synth.getVoices().entries()){
+    console.log("synthVoice.name", synthVoice.name);
+    if (synthVoice.name == "Google 한국의") {
+      voiceIdx = idx;
+      break;
+    }
+  }
 
   const onClickRepeat = (targetId) => {
 
@@ -16,8 +26,15 @@ function CartItem({ each, onToggle }) {
       await console.log("메세지 확인 itemInfo : ", response.item.itemInfo)
       
       target = response.item.itemInfo.watchListDesc;
-      utterance = new SpeechSynthesisUtterance(target);
-      await synth.speak(utterance);
+      
+      let limit = Math.ceil(target.length/100);
+      for(let i =0; i<limit; i++){
+        let tempTarget = target.substring(i*100, i*100+100);
+        utterance = new SpeechSynthesisUtterance(tempTarget);
+        utterance.voice = synth.getVoices()[59];
+        await console.log("target", i, tempTarget);
+        await synth.speak(utterance);
+      }
     });
   }
 
