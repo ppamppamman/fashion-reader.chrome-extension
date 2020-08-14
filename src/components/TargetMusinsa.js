@@ -217,7 +217,18 @@ function TargetMusinsa() {
     `PK원피스 : 넥라인에 카라가 있는 원피스.`,
     `플레어 원피스 : 끝단이 풍성하여 아래통이 넓게 디자인된 원피스. , 뷔스티에 원피스 : 얇은 끈으로 어깨와 팔이 드러난 원피스. , 프릴 : 주름을 잡아 물결 모양으로 만든 옷 가장자리의 디테일.`
   ]
-
+  let synth = speechSynthesis;
+  let voiceIdx, utterance;
+  // synthVoice 임시조치
+  setTimeout(() => {
+    for(let [idx, synthVoice] of synth.getVoices().entries()){
+      console.log("synthVoice.name", synthVoice.name);
+      if (synthVoice.name == "Google 한국의") {
+        voiceIdx = idx;
+        break;
+      }
+    }
+  });
   const checkValidUrl = (link) => {
     let targetUrl = "store.musinsa.com/app/product/detail/";
     return link.includes(targetUrl);
@@ -234,7 +245,9 @@ function TargetMusinsa() {
 
     if ( checkWatchListUrl(window.location.href) ) {
       console.log("이미 본 상품");
-      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 상품입니다."));
+      utterance = new SpeechSynthesisUtterance("이미 본 상품입니다.");
+      utterance.voice = synth.getVoices()[voiceIdx];
+      synth.speak(utterance);
     } else {
       console.log("저장 시작");
 
@@ -321,7 +334,9 @@ function TargetMusinsa() {
 
       window.chrome.runtime.sendMessage({method: "POST_SCENARIO_ITEM_INFO", value: target, scenarioTarget: scenarioTarget}, function(response) {
         console.log(response.data);
-        speechSynthesis.speak(new SpeechSynthesisUtterance("준비 완료."));
+        utterance = new SpeechSynthesisUtterance("준비 완료.");
+        utterance.voice = synth.getVoices()[voiceIdx];
+        synth.speak(utterance);
       });
 
       // checkWatchListUrl을 위한 레거시

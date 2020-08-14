@@ -5,6 +5,19 @@ import React, { useEffect, useCallback } from 'react'
 // 데이터 파싱
 function Parse() {
 
+  let synth = speechSynthesis;
+  let voiceIdx, utterance;
+  // synthVoice 임시조치
+  setTimeout(() => {
+    for(let [idx, synthVoice] of synth.getVoices().entries()){
+      console.log("synthVoice.name", synthVoice.name);
+      if (synthVoice.name == "Google 한국의") {
+        voiceIdx = idx;
+        break;
+      }
+    }
+  });
+
   // init
   const init = (target) => {
     return JSON.parse(window.localStorage.getItem(target)) ? 
@@ -29,7 +42,10 @@ function Parse() {
 
     if ( checkWatchListUrl(window.location.href) ) {
       console.log("이미 본 상품");
-      speechSynthesis.speak(new SpeechSynthesisUtterance("이미 본 상품입니다."));
+      
+      utterance = new SpeechSynthesisUtterance("이미 본 상품입니다.");
+      utterance.voice = synth.getVoices()[voiceIdx];
+      synth.speak(utterance);
     } else {
       console.log("저장 시작");
 
@@ -124,7 +140,9 @@ function Parse() {
 
       window.chrome.runtime.sendMessage({method: "POST_ITEM_INFO", value: target}, function(response) {
         console.log(response.data);
-        speechSynthesis.speak(new SpeechSynthesisUtterance("준비 완료."));
+        utterance = new SpeechSynthesisUtterance("준비 완료.");
+        utterance.voice = synth.getVoices()[voiceIdx];
+        synth.speak(utterance);
       });
 
       // checkWatchListUrl을 위한 레거시
