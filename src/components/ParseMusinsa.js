@@ -35,17 +35,12 @@ function Parse() {
 
       // 무신사 productInfo 탐색 시작
       let brandName, season, gender, viewCount, sellTotalCount, likeCount, reviewCount, reviewSatisfaction, hashTags;
-      // let brandName = document.querySelector("div.product_info_section").querySelectorAll("ul > li")[0].querySelector("strong").childNodes[0].innerText;
-      // let season = document.querySelector("div.product_info_section").querySelectorAll("ul > li")[1].querySelector("strong").innerText;
-      // let gender = document.querySelector("div.product_info_section").querySelector(".txt_gender").innerText;
-      // let viewCount = document.querySelector("div.product_info_section").querySelector("#pageview_1m").innerText;
-      // let sellTotalCount = document.querySelector("div.product_info_section").querySelector("#sales_1y_qty").innerText;
-      // let likeCount = document.querySelector("div.product_info_section").querySelector(".prd_like_cnt").innerText;
-      // let reviewCount = document.querySelector("div.product_info_section").querySelector(".link_type").innerText;
-      // let reviewSatisfaction = document.querySelector("div.product_info_section").querySelectorAll(".product_article_contents")[5].innerText.split("/")[1];
-      // let hashTags = document.querySelector("div.product_info_section").querySelectorAll("ul > li")[6].innerText.split("\n").join().split("#").join("");
-      let productInfos = ["브랜드", "시즌", "성별", "조회수", "누적판매", "좋아요", "구매후기", "#"];
+      let productInfos = [ "성별", "브랜드", "시즌", "조회수", "누적판매", "좋아요", "구매후기", "#"];
       let productInfoNodeList = document.querySelector("div.product_info_section").querySelectorAll("ul > li");
+      let tempDesc=[];
+      tempDesc.push(`상품 이름 : ${document.querySelector(".product_title > span").innerText}`)
+      tempDesc.push(`가격 : ${document.querySelector("#goods_price").innerText+"원"}`)
+      tempDesc.push(`카테고리 : ${document.querySelector(".item_categories").innerText.split(">").join()}`)
       
       for (let i=0; i < productInfos.length; i++) {
         switch(productInfos[i]){
@@ -53,6 +48,7 @@ function Parse() {
             for (let [idx, e] of productInfoNodeList.entries()) {
               if (e.innerText.includes("브랜드")) {
                 brandName = productInfoNodeList[idx].querySelector("strong")?.childNodes[0].innerText;
+                if (brandName) { tempDesc.push(`브랜드 이름 : ${brandName}.`) }
               }
             }
             break;
@@ -60,26 +56,33 @@ function Parse() {
             for (let [idx, e] of productInfoNodeList.entries()) {
               if (e.innerText.includes("시즌")) {
                 season = productInfoNodeList[idx].querySelector("strong")?.innerText;
+                if (season) { tempDesc.push(`시즌 : ${season}.`) }
               }
             }
             break;
           case "성별":
             gender = document.querySelector("div.product_info_section").querySelector(".txt_gender")?.innerText;
+            if (gender) { tempDesc.push(`성별 : ${gender}.`) }
             break;
           case "조회수":
             viewCount = document.querySelector("div.product_info_section").querySelector("#pageview_1m")?.innerText;
+            if (viewCount) { tempDesc.push(`상품 조회수 : ${viewCount}.`) }
             break;
           case "누적판매":
             sellTotalCount = document.querySelector("div.product_info_section").querySelector("#sales_1y_qty")?.innerText;
+            if (sellTotalCount) { tempDesc.push(`상품 판매수 : ${sellTotalCount}.`) }
             break;
           case "좋아요":
             likeCount = document.querySelector("div.product_info_section").querySelector(".prd_like_cnt")?.innerText;
+            if (likeCount) { tempDesc.push(`상품 좋아요수 : ${likeCount}.`) }
             break;
           case "구매후기":
             for (let [idx, e] of productInfoNodeList.entries()) {
               if (e.innerText.includes("구매후기")) {
                 reviewCount = document.querySelector("div.product_info_section").querySelectorAll(".product_article_contents")[idx]?.innerText.split("/")[0].split("건")[0];
+                if (reviewCount) { tempDesc.push(`상품 리뷰수 : ${reviewCount}.`) }
                 reviewSatisfaction = document.querySelector("div.product_info_section").querySelectorAll(".product_article_contents")[idx]?.innerText.split("/")[1];
+                if (reviewSatisfaction) { tempDesc.push(`상품 만족도 : ${reviewSatisfaction}.`) }
               }
             }
             break;
@@ -87,6 +90,7 @@ function Parse() {
             for (let [idx, e] of productInfoNodeList.entries()) {
               if (e.innerText.includes("#")) {
                 hashTags = document.querySelector("div.product_info_section").querySelectorAll("ul > li")[idx]?.innerText.split('\n').join().split("#").join("");
+                if (hashTags) { tempDesc.push(`상품 해시태그 : ${hashTags}.`) }
               }
             }
             break;
@@ -95,24 +99,27 @@ function Parse() {
         }
       }
       // productInfo 탐색 끝
+      console.log("tempDesc", tempDesc)
 
       // 넘길 데이터 할당 시작
       //let brandName, season, gender, viewCount, sellTotalCount, likeCount, reviewCount, reviewSatisfaction, hashTags;
+
       let target = {
         watchListUrl: window.location.href,
         watchListImg: document.getElementById('bigimg').src,
-        watchListDesc: document.querySelector(".product_title > span").innerText,
+        watchListTitle: document.querySelector(".product_title > span").innerText,
+        watchListDesc: tempDesc.join(". , "),
         watchListPrice: document.querySelector("#goods_price").innerText+"원",
         watchListCategory: document.querySelector(".item_categories").innerText.split(">").join(),
-        watchListBrandName: brandName === undefined ? null : brandName,
-        watchListSeason: season === undefined ? null : season,
-        watchListGender: gender === undefined ? null : gender,
-        watchListViewCount: viewCount === undefined ? null : viewCount,
-        watchListSellTotalCount: sellTotalCount === undefined ? null : sellTotalCount,
-        watchListLikeCount: likeCount === undefined ? null : likeCount,
-        watchListReviewCount: reviewCount === undefined ? null : reviewCount,
-        watchListReviewSatisfaction: reviewSatisfaction === undefined ? null : reviewSatisfaction,
-        watchListHashTags: hashTags === undefined ? null : hashTags
+        watchListBrandName: brandName === undefined ? undefined : brandName,
+        watchListSeason: season === undefined ? undefined : season,
+        watchListGender: gender === undefined ? undefined : gender,
+        watchListViewCount: viewCount === undefined ? undefined : viewCount,
+        watchListSellTotalCount: sellTotalCount === undefined ? undefined : sellTotalCount,
+        watchListLikeCount: likeCount === undefined ? undefined : likeCount,
+        watchListReviewCount: reviewCount === undefined ? undefined : reviewCount,
+        watchListReviewSatisfaction: reviewSatisfaction === undefined ? undefined : reviewSatisfaction,
+        watchListHashTags: hashTags === undefined ? undefined : hashTags
       }
 
       window.chrome.runtime.sendMessage({method: "POST_ITEM_INFO", value: target}, function(response) {

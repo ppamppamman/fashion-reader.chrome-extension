@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 function CartItem({ each, onToggle }) {
 
   let target, utterance;
+  let desc = [];
   let synth = speechSynthesis;
 
   const onClickRepeat = (targetId) => {
@@ -36,9 +37,59 @@ function CartItem({ each, onToggle }) {
       <div className="divider" style={{"width": "90%", "height": "0", "margin": "2%", "overflow": "hidden", "border-top": "1px solid #e1e6ea" }}></div>
       <div className="cartItem" style={{"width":"85%", "margin":"2%", "padding":"2%"}}>
           <div className="cartItem-text">
-            <h1> id: {each.id} </h1>
-            <h1> {each.itemInfo.watchListDesc} </h1>
-            <p> {JSON.stringify(each.itemInfo)} </p>
+            <h1> {each.itemInfo.watchListTitle} </h1>
+            <h4> 
+              {(undefined !== each.itemInfo.watchListCategory ) ? 
+                ("카테고리 : "+each.itemInfo.watchListCategory).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> ) }
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListGender) ? 
+                ("성별 : "+each.itemInfo.watchListGender).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> ) }
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListBrandName) ? 
+                ("브랜드이름 : "+each.itemInfo.watchListBrandName).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListSeason) ? 
+                ("시즌 : "+each.itemInfo.watchListSeason).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListViewCount) ? 
+                ("상품 조회수 : "+each.itemInfo.watchListViewCount).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListSellTotalCount) ? 
+                ("상품 판매수 : "+each.itemInfo.watchListSellTotalCount).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListLikeCount) ? 
+                ("상품 좋아요수 : "+each.itemInfo.watchListLikeCount).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListReviewCount) ? 
+                ("상품 리뷰수 : "+each.itemInfo.watchListReviewCount).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListReviewSatisfaction) ? 
+                ("상품 만족도 : "+each.itemInfo.watchListReviewSatisfaction).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+              {(undefined !== each.itemInfo.watchListHashTags) ? 
+                ("상품 해시태그 : "+each.itemInfo.watchListHashTags).split('\n').map(
+                  text => { desc.push(text); return ( <> {text}<br/> </> )}
+                ) : (null) 
+              }
+            </h4>
             <br />
           </div>
           <div className="cartItem-img" style={{ "text-align": "center" }}>

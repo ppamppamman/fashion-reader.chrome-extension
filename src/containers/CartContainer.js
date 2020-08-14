@@ -46,7 +46,6 @@ function CartContainer() {
   return (
     <>
       <h1>FASHION-READER CART</h1>
-      <button onClick={ () => getStorageData(cart, setCart) }>체크</button>
       <button onClick={ initStorageData }>init</button>
       <br />
       <Cart cart={cart} />

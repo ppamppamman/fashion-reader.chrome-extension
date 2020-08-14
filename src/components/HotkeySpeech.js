@@ -45,13 +45,17 @@ function Hotkey() {
             utterance = new SpeechSynthesisUtterance(target);
             synth.speak(utterance);
             break;
+          case ')':
+            console.log("타겟일 때 작동하는 기존 버전 내용")
+            event.preventDefault();
+            break;
           case "ArrowLeft": // 로컬 스토리지 선택 포인트 좌측 이동
             console.log("이전 상품");
             window.chrome.runtime.sendMessage({method: "PATCH_CURRENT_ID_LEFT"}, async (response) => {
               await console.log("메세지 확인", response)
               event.preventDefault();
               synth.cancel(utterance);
-              target = `현재 상품은 ${response.currentId+1} 번 상품입니다.`
+              target = `현재 상품은 ${response.itemCount}개 중 ${response.currentId+1}개 째 상품입니다.`
               utterance = new SpeechSynthesisUtterance(target);
               await synth.speak(utterance);
             });
@@ -62,7 +66,7 @@ function Hotkey() {
               await console.log("메세지 확인", response);
               event.preventDefault();
               synth.cancel(utterance);
-              target = `현재 상품은 ${response.currentId+1} 번 상품입니다.`
+              target = `현재 상품은 ${response.itemCount}개 중 ${response.currentId+1}개 째 상품입니다.`
               utterance = new SpeechSynthesisUtterance(target);
               await synth.speak(utterance);
             });
@@ -72,7 +76,7 @@ function Hotkey() {
             event.preventDefault();
             synth.cancel(utterance);
             target = `
-              쉬프트키와 숫자 1은 기본 재생. 쉬프트키와 숫자 2는 상세 재생. 쉬프트키와 숫자 3은 멈춤. 
+              쉬프트키와 숫자 1은 기본 재생. 쉬프트키와 숫자 2는 추가정보 재생. 쉬프트키와 숫자 3은 멈춤. 
               쉬프트키와 왼쪽키는 이전 상품을 선택. 쉬프트키와 오른쪽키는 다음 상품을 선택. 
               쉬프트와 H는 단축키 읽어주기입니다.`;
             utterance = new SpeechSynthesisUtterance(target);
@@ -83,7 +87,7 @@ function Hotkey() {
             event.preventDefault();
             synth.cancel(utterance);
             target = `
-              쉬프트키와 숫자 1은 기본 재생. 쉬프트키와 숫자 2는 상세 재생. 쉬프트키와 숫자 3은 멈춤. 
+              쉬프트키와 숫자 1은 기본 재생. 쉬프트키와 숫자 2는 추가정보 재생. 쉬프트키와 숫자 3은 멈춤. 
               쉬프트키와 왼쪽키는 이전 상품을 선택. 쉬프트키와 오른쪽키는 다음 상품을 선택. 
               쉬프트와 H는 단축키 읽어주기입니다.`;
             utterance = new SpeechSynthesisUtterance(target);
