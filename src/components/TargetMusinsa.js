@@ -203,6 +203,21 @@ function TargetMusinsa() {
     `
   ];
 
+  let scenarioAdditionalDesc = [
+    `크롭 기장 : 아랫선이 잘린 듯 허리가 드러나는 짧은 형태의 상의.`,
+    `크롭 기장 : 아랫선이 잘린 듯 허리가 드러나는 짧은 형태의 상의.`,
+    `추가정보 없음.`,
+    `추가정보 없음.`,
+    `싱글버튼 코트 : 정면의 여미는 단추가 세로 한 줄인 코트.`,
+    `더블버튼 코트 : 정면의 여미는 단추가 세로 두 줄인 코트.`,
+    `사파리 자켓 : 간편하고 투박한스타일의 포켓이 많이 달린 재킷, 야상. , 드롭숄더 : 어깨선의 경계 없이 흘러내리는 디자인의 어깨라인.`,
+    `싱글 버튼 코트 : 정면의 여미는 단추가 세로 한 줄인 코트.`,
+    `떡볶이 코트 : 목 부분에 모자가 달리고, 작은 통나무 모양의 단추를 장식 끈으로 잠가 입는 코트.`,
+    `스터드 : 금속의 징 장식.`,
+    `PK원피스 : 넥라인에 카라가 있는 원피스.`,
+    `플레어 원피스 : 끝단이 풍성하여 아래통이 넓게 디자인된 원피스. , 뷔스티에 원피스 : 얇은 끈으로 어깨와 팔이 드러난 원피스. , 프릴 : 주름을 잡아 물결 모양으로 만든 옷 가장자리의 디테일.`
+  ]
+
   const checkValidUrl = (link) => {
     let targetUrl = "store.musinsa.com/app/product/detail/";
     return link.includes(targetUrl);
@@ -283,7 +298,8 @@ function TargetMusinsa() {
         watchListUrl: window.location.href,
         watchListImg: document.getElementById('bigimg').src,
         watchListTitle: document.querySelector(".product_title > span").innerText,
-        watchListDesc: scenarioDesc[scenarioIdx]
+        watchListDesc: scenarioDesc[scenarioIdx],
+        watchListAdditionalDesc: scenarioAdditionalDesc[scenarioIdx]
       }
       let target = {
         watchListUrl: window.location.href,
@@ -302,11 +318,6 @@ function TargetMusinsa() {
         watchListReviewSatisfaction: reviewSatisfaction === undefined ? null : reviewSatisfaction,
         watchListHashTags: hashTags === undefined ? null : hashTags,
       }
-      
-      // window.chrome.runtime.sendMessage({method: "POST_ITEM_INFO", value: target}, function(response) {
-      //   console.log(response.data);
-      //   speechSynthesis.speak(new SpeechSynthesisUtterance("준비 완료."));
-      // });
 
       window.chrome.runtime.sendMessage({method: "POST_SCENARIO_ITEM_INFO", value: target, scenarioTarget: scenarioTarget}, function(response) {
         console.log(response.data);

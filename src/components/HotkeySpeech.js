@@ -33,9 +33,16 @@ function Hotkey() {
             });
             break;
           case '@': // 상세 재생
-            console.log("상세 재생");
-            target = "취소합니다.";
-            // speechSynthesis.speak(new SpeechSynthesisUtterance(target));
+            console.log("추가 정보 재생");
+            event.preventDefault();
+            synth.cancel(utterance);
+            window.chrome.runtime.sendMessage({method: "GET_CURRENT_ITEM"}, async (response) => {
+              await console.log("메세지 확인", response);
+              await console.log("메세지 확인 itemInfo : ", response.item?.itemInfo);
+              target = response.item.itemInfo.watchListAdditionalDesc;
+              utterance = new SpeechSynthesisUtterance(target);
+              await synth.speak(utterance);
+            });
             break;
           case '#': // 취소
             console.log("취소");

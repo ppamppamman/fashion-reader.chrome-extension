@@ -47,7 +47,6 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
             items: result.cart.items.concat({
               id: TARGET_ID, 
               itemInfo: request.scenarioTarget,
-              status: true,
               iteminfoVer2: request.value
             })
           }
