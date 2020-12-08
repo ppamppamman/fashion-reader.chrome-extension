@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux'; // 리덕스 사용을 위함
 import { createStore } from 'redux'; // 초기store
-import rootReducer from './modules' // modules/index로 바로 접근
+import rootReducer from './modules'; // modules/index로 바로 접근
 import { composeWithDevTools } from 'redux-devtools-extension';
 // import * as serviceWorker from './serviceWorker';
 
@@ -16,16 +16,23 @@ const targetWebpageBody = document.getElementsByTagName('body')[0];
 // Create a div to render the <App /> component to.
 const app = document.createElement('div');
 // Set the app element's id to `root`. This is the same as the element that create-react-app renders to by default so it will work on the local server too.
-app.id = 'root';
+app.id = 'app-root';
 // Prepend the <App /> component to the viewport element if it exists. You could also use `appendChild` depending on your needs.
-if (targetWebpageBody) targetWebpageBody.prepend(app);
+// targetWebpageBody.append(app);
+
+if (targetWebpageBody) {
+	console.log(targetWebpageBody);
+	targetWebpageBody.prepend(app);
+} else {
+	console.log('none');
+}
 // experiment end 실험
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('app-root')
 );
 
 // If you want your app to work offline and load faster, you can change

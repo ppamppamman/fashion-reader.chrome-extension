@@ -10,7 +10,7 @@ function Parse() {
   // synthVoice 임시조치
   setTimeout(() => {
     for(let [idx, synthVoice] of synth.getVoices().entries()){
-      console.log("synthVoice.name", synthVoice.name);
+      
       if (synthVoice.name == "Google 한국의") {
         voiceIdx = idx;
         break;
@@ -45,6 +45,7 @@ function Parse() {
       
       utterance = new SpeechSynthesisUtterance("이미 본 상품입니다.");
       utterance.voice = synth.getVoices()[voiceIdx];
+      utterance.rate = 1.3;
       synth.speak(utterance);
     } else {
       console.log("저장 시작");
@@ -142,6 +143,7 @@ function Parse() {
         console.log(response.data);
         utterance = new SpeechSynthesisUtterance("준비 완료.");
         utterance.voice = synth.getVoices()[voiceIdx];
+        utterance.rate = 1.3;
         synth.speak(utterance);
       });
 
